@@ -1,0 +1,129 @@
+.map-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(30px, 1fr)); /* Adjust 30px for desired tile size */
+  grid-template-rows: repeat(auto-fill, minmax(30px, 1fr));    /* Adjust 30px for desired tile size */
+  border: 1px solid #ccc;
+  width: fit-content; /* Or a fixed width like 300px if auto-fill doesn't work as expected */
+  margin: 20px auto; /* Center the map */
+}
+
+.map-grid-row {
+  display: flex;
+}
+
+.map-tile {
+  width: 30px;  /* Match minmax above */
+  height: 30px; /* Match minmax above */
+  border: 1px solid #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.7em;
+  box-sizing: border-box; /* Important to include border in width/height */
+}
+
+/* Define colors for different tile types */
+.map-tile.plains {
+  background-color: #90ee90; /* LightGreen */
+}
+
+.map-tile.mountain {
+  background-color: #a9a9a9; /* DarkGray */
+}
+
+.map-tile.water {
+  background-color: #add8e6; /* LightBlue */
+}
+
+/* Add hover effect for better UX */
+.map-tile:hover {
+  border: 1px solid #333;
+  cursor: pointer;
+}
+
+/* Unit and Sect styling */
+.map-tile.unit {
+  /* font-weight: bold; */
+  color: #fff; /* White text for units */
+  /* background-color: rgba(0, 0, 0, 0.2); */ /* Slightly darken tile if unit is present */
+}
+
+.map-tile.sect {
+  /* font-weight: bold; */
+  color: #ff0; /* Yellow text for sects */
+  /* background-color: rgba(255, 255, 0, 0.2); */ /* Slightly yellow tint for sect tiles */
+  border-style: dashed; /* Distinguish sect tiles */
+}
+
+.map-tile .unit-icon, .map-tile .sect-icon {
+  font-size: 1.2em; /* Make icons/text slightly larger */
+  font-weight: bold;
+}
+
+.map-tile.selected-unit {
+  outline: 2px solid blue; /* Highlight selected unit */
+  outline-offset: -2px; /* Ensure outline is within tile boundaries */
+}
+
+.map-tile.plains .unit {
+  color: #333; /* Darker text for units on light green plains */
+}
+.map-tile.plains .sect {
+  color: #8B4513; /* Brown for Sects on plains */
+}
+
+/* Unit Styling specific for Formation Scribe on plains */
+.map-tile.plains .unit-scribe { 
+  color: #20c997; /* Teal color for Formation Scribe 'F' */
+}
+
+/* Resource Styling */
+.map-tile.has-resource {
+  /* Common style for any tile with a resource */
+  font-weight: bold;
+}
+
+.map-tile .resource-qi,
+.map-tile .resource-stones,
+.map-tile .resource-wood {
+  /* Style for the text character representing the resource */
+}
+
+/* Styling for the text symbol of the resource, if shown when tile is empty */
+.map-tile.plains.resource-qi:not(.sect):not(.unit):not(.has-improvement.improvement-active) { color: #007bff; } /* Blue Q */
+.map-tile.plains.resource-stones:not(.sect):not(.unit):not(.has-improvement.improvement-active) { color: #6c757d; } /* Grey $ */
+.map-tile.plains.resource-wood:not(.sect):not(.unit):not(.has-improvement.improvement-active) { color: #8B4513; } /* Brown W */
+
+
+/* Exploited Resource Styling */
+.map-tile.has-resource.exploited {
+  /* General style for a tile that has a resource AND it's exploited */
+  box-shadow: inset 0 0 0 2px #ff8c00; /* DarkOrange border inside */
+}
+
+/* Update color for exploited resources if no unit/sect/active improvement on top */
+.map-tile.plains.has-resource.exploited.resource-qi:not(.sect):not(.unit):not(.has-improvement.improvement-active) { color: #0056b3;}
+.map-tile.plains.has-resource.exploited.resource-stones:not(.sect):not(.unit):not(.has-improvement.improvement-active) { color: #495057;}
+.map-tile.plains.has-resource.exploited.resource-wood:not(.sect):not(.unit):not(.has-improvement.improvement-active) { color: #542a0b;}
+
+
+/* Tile Improvement Styling */
+.map-tile.has-improvement {
+  /* Common style for any tile with an improvement */
+}
+
+.map-tile.improvement-active {
+  /* Style for an active improvement (e.g., slightly different background or border) */
+  /* Example: a subtle glow or different border style if not already covered by resource exploitation */
+  /* border-style: double; */
+  /* border-color: #28a745; */ /* Green border for active improvement */
+}
+
+/* Styling for the text symbol of the improvement, if shown when tile is empty */
+.map-tile.plains.improvement-qi:not(.sect):not(.unit) { color: #17a2b8; }  /* Info Blue Q+ */
+.map-tile.plains.improvement-stones:not(.sect):not(.unit) { color: #343a40; } /* Dark Grey $+ */
+.map-tile.plains.improvement-wood:not(.sect):not(.unit) { color: #d2691e; } /* Chocolate W+ */
+
+/* If an improvement is active, it might also be on an exploited resource.
+   The box-shadow from .has-resource.exploited will apply.
+   The text color for the improvement symbol takes precedence if shown. */

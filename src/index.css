@@ -1,0 +1,10 @@
+/* Basic reset or global styles */
+body {
+  margin: 0;
+  font-family: sans-serif; /* A simple default font */
+}
+
+#root {
+  /* You might want to set a min-height or other properties if your app
+     doesn't fill the viewport by default. */
+}
